@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ContainerHeader = styled.header `
     width: 100%;
-    background-color: #31c078;
+    background-color: ${props => props.theme.colors.primary};
 `
 
 export const ContentHeader = styled.div `
@@ -18,11 +18,28 @@ export const ContentHeader = styled.div `
         ul {
             list-style: none;
             display: flex;
-            gap: 1rem;
+            gap: 2rem;
+
+            .active {
+                a { 
+                    &::before,
+                    &::after {
+                        content: '';
+                        display: block;
+                        width: 100%;
+                        height: 2px;
+                        background-color: white;
+                        position: absolute;
+                        bottom: 0;
+    
+                    }
+                }
+            }
 
             li {
                 a {
-                    padding: 8px 12px;
+                    position: relative;
+                    padding: 8px 1px;
                     font-weight: 500;
                     font-size: 1.1rem;
                     text-decoration: none;
@@ -32,7 +49,37 @@ export const ContentHeader = styled.div `
                     transition: .3s ease-in-out ;
 
                     &:hover {
-                        opacity: .8;
+
+                        &::before,
+                        &::after {
+                            content: '';
+                            display: block;
+                            width: 100%;
+                            height: 2px;
+                            background-color: white;
+                            position: absolute;
+                            bottom: 0;
+
+                            animation: underlineAnimation .5s linear;
+                        }
+
+                        &::before {
+                            right: 0;
+                        }
+
+                        &::after {
+                            left: 0;
+                        }
+                    }
+
+                    @keyframes underlineAnimation {
+                        0% {
+                            width: 0;
+                        }
+
+                        100% {
+                            width: 100%;
+                        }    
                     }
                 }
             }

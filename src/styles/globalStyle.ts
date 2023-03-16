@@ -7,4 +7,8 @@ export default createGlobalStyle `
         box-sizing: border-box;
         font-family: Golos Text, sans-serif;
     }
+
+    body {
+        color: ${props => props.theme.colors.black};
+    }
 `

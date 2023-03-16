@@ -1,7 +1,7 @@
 import { Routes as AllRoutes, Route } from 'react-router-dom';
 
 import { BrazilCup } from '../pages/BrazilCup';
-import { BrazilianChampionship } from '../pages/brazilianChampionship';
+import { BrazilianChampionship } from '../pages/BrazilianChampionship';
 
 export function Routes() {
     return (

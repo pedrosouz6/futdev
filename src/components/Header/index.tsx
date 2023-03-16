@@ -7,6 +7,9 @@ import {
 } from "./style";
 
 export function Header() {
+
+    const path = window.location.pathname;
+
     return (
         <ContainerHeader>
             <Container>
@@ -15,8 +18,24 @@ export function Header() {
 
                     <nav>
                         <ul>
-                            <li><Link to='/campeonato-brasileiro'> CAMPEONATO BRASILEIRO </Link></li>
-                            <li><Link to='/copa-do-brasil'> COPA DO BRASIL </Link></li>
+                            <li 
+                                className={
+                                    path.includes('/campeonato-brasileiro') ? 
+                                    'active' : 
+                                    ''
+                                } 
+                            >
+                                <Link to='/campeonato-brasileiro'> CAMPEONATO BRASILEIRO </Link>
+                            </li>
+                            
+                            <li 
+                                className={path.includes('/copa-do-brasil') ?
+                                    'active' :
+                                    ''
+                                }
+                            >
+                                <Link to='/copa-do-brasil'> COPA DO BRASIL </Link>
+                            </li>
                         </ul>
                     </nav>
                 </ContentHeader>
