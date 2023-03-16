@@ -1,4 +1,5 @@
 import { useQueries } from 'react-query';
+import { Tooltip } from 'react-tooltip';
 
 import { api } from '../../service/axios';
 import { Header } from "../../components/Header";
@@ -79,16 +80,13 @@ export function BrazilianChampionship() {
             const respost: TableBrazilianChampionshipData[] = await response.data;
             return respost;
         }},
-
     ])
-
-    console.log(results)
 
     return (
         <main>
+            <Tooltip anchorSelect='.tooltip' />
             <Header />
             <Container>
-
                 <ContentBrazilianChampionship>
                     <TitleLogoBrazilianChampionship>
                         <img src={results[0].data?.logo} alt="Logo Campeonato Brasileiro" />
@@ -111,18 +109,18 @@ export function BrazilianChampionship() {
                         <table>
                             <thead>
                                 <tr>
-                                    <td>POS</td>
-                                    <td>Time</td>
-                                    <td>PTS</td>
-                                    <td>J</td>
-                                    <td>V</td>
-                                    <td>E</td>
-                                    <td>D</td>
-                                    <td>GP</td>
-                                    <td>GC</td>
-                                    <td>SG</td>
-                                    <td>%</td>
-                                    <td>Recentes</td>
+                                    <td className='tooltip' data-tooltip-content="Posição">POS</td>
+                                    <td className='tooltip'>Time</td>
+                                    <td className='tooltip' data-tooltip-content="Pontos">PTS</td>
+                                    <td className='tooltip' data-tooltip-content="Jogos">J</td>
+                                    <td className='tooltip' data-tooltip-content="Vitória">V</td>
+                                    <td className='tooltip' data-tooltip-content="Empate">E</td>
+                                    <td className='tooltip' data-tooltip-content="Derrota">D</td>
+                                    <td className='tooltip' data-tooltip-content="Gols Pró">GP</td>
+                                    <td className='tooltip' data-tooltip-content="Gols Contra">GC</td>
+                                    <td className='tooltip' data-tooltip-content="Saldo de Gols">SG</td>
+                                    <td className='tooltip' data-tooltip-content="Aproveitamento">%</td>
+                                    <td className='tooltip'>Recentes</td>
                                 </tr>
                             </thead>
 
@@ -137,21 +135,21 @@ export function BrazilianChampionship() {
                                         <td>{ item.empates }</td>
                                         <td>{ item.derrotas }</td>
                                         <td>{ item.gols_pro }</td>
-                                        <td>{ item.gols_contra}</td>
+                                        <td>{ item.gols_contra }</td>
                                         <td>{ item.saldo_gols }</td>
                                         <td>{ item.aproveitamento }</td>
                                         <LastGamesBrazilianChampionship>
                                             { item.ultimos_jogos.map(item => {
                                                 if(item === 'v') {
-                                                    return <WinBrazilianChampionship />
+                                                    return <WinBrazilianChampionship className='tooltip' data-tooltip-content="Vitória" />
                                                 }
 
                                                 if(item === 'd') {
-                                                    return <LossBrazilianChampionship />
+                                                    return <LossBrazilianChampionship className='tooltip' data-tooltip-content="Derrota" />
                                                 }
 
                                                 if(item === 'e') {
-                                                    return <DrawBrazilianChampionship />
+                                                    return <DrawBrazilianChampionship className='tooltip' data-tooltip-content="Empate" />
                                                 }
                                             })}
                                         </LastGamesBrazilianChampionship>

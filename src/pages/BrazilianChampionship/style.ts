@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const ContentBrazilianChampionship = styled.div `
+    padding-bottom: 30px;
+
     h3 {
         margin: 2rem 0;
         font-size: 1.8em;
@@ -50,7 +52,11 @@ export const TitleStatusBrazilianChampionship = styled.div `
 `
 
 export const ContainerTableBrazilianChampionship = styled.div `
+    width: 100%;
+    overflow: auto;
+
     table {
+        width: 100%;
         border-collapse: collapse;
 
         td {
@@ -90,6 +96,9 @@ export const DrawBrazilianChampionship = styled.div `
 
 export const LastGamesBrazilianChampionship = styled.td `
     gap: 5px;
+
+    min-width: 132px;
+    width: 132px;
 
     div {
         display: inline-block;
