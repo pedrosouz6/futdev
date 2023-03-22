@@ -4,6 +4,7 @@ import { Tooltip } from 'react-tooltip';
 import { api } from '../../service/axios';
 import { Header } from "../../components/Header";
 import { Title } from "../../components/Title";
+import { SkeletonScreen } from '../../components/SkeletonScreen';
 
 import { Container } from "../../components/Container/style";
 
@@ -39,7 +40,6 @@ interface BrazilianChampionshipData {
         nome: string,
         rodada: number,
     },
-
 }
 
 interface TableBrazilianChampionshipData {
@@ -68,97 +68,100 @@ export function BrazilianChampionship() {
             const response = await api.get('campeonatos/10')
             const respost: BrazilianChampionshipData = await response.data;
             return respost;
-        }},
-        { queryKey: ['Tabela do Campeonato Brasileiro', 2], queryFn: async () => {
+        },
+        staleTime: 99999999   
+    },
+        { queryKey: ['Tabela do Campeonato Brasileiro'], queryFn: async () => {
             const response = await api.get('campeonatos/10/tabela')
             const respost: TableBrazilianChampionshipData[] = await response.data;
             return respost;
-        }},
-
-        { queryKey: ['Rodada do Campeonato Brasileiro', 2], queryFn: async () => {
-            const response = await api.get('campeonatos/10/rodadas')
-            const respost: TableBrazilianChampionshipData[] = await response.data;
-            return respost;
-        }},
+        },
+        staleTime: 99999999
+    }
     ])
+
 
     return (
         <main>
             <Tooltip anchorSelect='.tooltip' />
             <Header />
             <Container>
-                <ContentBrazilianChampionship>
-                    <TitleLogoBrazilianChampionship>
-                        <img src={results[0].data?.logo} alt="Logo Campeonato Brasileiro" />
 
-                        <TitleStatusBrazilianChampionship>
-                            <Title 
-                                text={ 
-                                    results[0].data ? 
-                                    `${results[0].data.nome} ${results[0].data.edicao_atual.temporada}` 
-                                    : '' }
+                {
+                    results[0].data ? 
+                    <ContentBrazilianChampionship>
+                        <TitleLogoBrazilianChampionship>
+                            <img src={results[0].data?.logo} alt="Logo Campeonato Brasileiro" />
+
+                            <TitleStatusBrazilianChampionship>
+                                <Title 
+                                    text={ 
+                                        `${results[0].data.nome} 
+                                        ${results[0].data.edicao_atual.temporada}`}
                                 />
 
-                            <span>{ results[0].data?.status }</span>
-                        </TitleStatusBrazilianChampionship>
-                    </TitleLogoBrazilianChampionship>
+                                <span>{ results[0].data?.status }</span>
+                            </TitleStatusBrazilianChampionship>
+                        </TitleLogoBrazilianChampionship>
 
-                    <h3>{ results[0].data?.fase_atual.nome }</h3>
+                        <h3>{ results[0].data?.fase_atual.nome }</h3>
 
-                    <ContainerTableBrazilianChampionship>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td className='tooltip' data-tooltip-content="Posição">POS</td>
-                                    <td className='tooltip'>Time</td>
-                                    <td className='tooltip' data-tooltip-content="Pontos">PTS</td>
-                                    <td className='tooltip' data-tooltip-content="Jogos">J</td>
-                                    <td className='tooltip' data-tooltip-content="Vitória">V</td>
-                                    <td className='tooltip' data-tooltip-content="Empate">E</td>
-                                    <td className='tooltip' data-tooltip-content="Derrota">D</td>
-                                    <td className='tooltip' data-tooltip-content="Gols Pró">GP</td>
-                                    <td className='tooltip' data-tooltip-content="Gols Contra">GC</td>
-                                    <td className='tooltip' data-tooltip-content="Saldo de Gols">SG</td>
-                                    <td className='tooltip' data-tooltip-content="Aproveitamento">%</td>
-                                    <td className='tooltip'>Recentes</td>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                { results[1].data?.map((item, key) => (
-                                    <tr key={key}>
-                                        <td>{ item.posicao }º</td>
-                                        <td>{ item.time.nome_popular }</td>
-                                        <td>{ item.pontos }</td>
-                                        <td>{ item.jogos }</td>
-                                        <td>{ item.vitorias }</td>
-                                        <td>{ item.empates }</td>
-                                        <td>{ item.derrotas }</td>
-                                        <td>{ item.gols_pro }</td>
-                                        <td>{ item.gols_contra }</td>
-                                        <td>{ item.saldo_gols }</td>
-                                        <td>{ item.aproveitamento }</td>
-                                        <LastGamesBrazilianChampionship>
-                                            { item.ultimos_jogos.map(item => {
-                                                if(item === 'v') {
-                                                    return <WinBrazilianChampionship className='tooltip' data-tooltip-content="Vitória" />
-                                                }
-
-                                                if(item === 'd') {
-                                                    return <LossBrazilianChampionship className='tooltip' data-tooltip-content="Derrota" />
-                                                }
-
-                                                if(item === 'e') {
-                                                    return <DrawBrazilianChampionship className='tooltip' data-tooltip-content="Empate" />
-                                                }
-                                            })}
-                                        </LastGamesBrazilianChampionship>
+                        <ContainerTableBrazilianChampionship>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td className='tooltip' data-tooltip-content="Posição">POS</td>
+                                        <td className='tooltip'>Time</td>
+                                        <td className='tooltip' data-tooltip-content="Pontos">PTS</td>
+                                        <td className='tooltip' data-tooltip-content="Jogos">J</td>
+                                        <td className='tooltip' data-tooltip-content="Vitória">V</td>
+                                        <td className='tooltip' data-tooltip-content="Empate">E</td>
+                                        <td className='tooltip' data-tooltip-content="Derrota">D</td>
+                                        <td className='tooltip' data-tooltip-content="Gols Pró">GP</td>
+                                        <td className='tooltip' data-tooltip-content="Gols Contra">GC</td>
+                                        <td className='tooltip' data-tooltip-content="Saldo de Gols">SG</td>
+                                        <td className='tooltip' data-tooltip-content="Aproveitamento">%</td>
+                                        <td className='tooltip'>Recentes</td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </ContainerTableBrazilianChampionship>
-                </ContentBrazilianChampionship>
+                                </thead>
+
+                                <tbody>
+                                    { results[1].data?.map((item, key) => (
+                                        <tr key={key}>
+                                            <td>{ item.posicao }º</td>
+                                            <td>{ item.time.nome_popular }</td>
+                                            <td>{ item.pontos }</td>
+                                            <td>{ item.jogos }</td>
+                                            <td>{ item.vitorias }</td>
+                                            <td>{ item.empates }</td>
+                                            <td>{ item.derrotas }</td>
+                                            <td>{ item.gols_pro }</td>
+                                            <td>{ item.gols_contra }</td>
+                                            <td>{ item.saldo_gols }</td>
+                                            <td>{ item.aproveitamento }</td>
+                                            <LastGamesBrazilianChampionship>
+                                                { item.ultimos_jogos.map((item, key) => {
+                                                    if(item === 'v') {
+                                                        return <WinBrazilianChampionship key={key} className='tooltip' data-tooltip-content="Vitória" />
+                                                    }
+
+                                                    if(item === 'd') {
+                                                        return <LossBrazilianChampionship key={key} className='tooltip' data-tooltip-content="Derrota" />
+                                                    }
+
+                                                    if(item === 'e') {
+                                                        return <DrawBrazilianChampionship key={key} className='tooltip' data-tooltip-content="Empate" />
+                                                    }
+                                                })}
+                                            </LastGamesBrazilianChampionship>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </ContainerTableBrazilianChampionship>
+                    </ContentBrazilianChampionship>
+                 : <SkeletonScreen />}
+
             </Container>
         </main>
     )

@@ -27,15 +27,6 @@ export function Header() {
                             >
                                 <Link to='/campeonato-brasileiro'> CAMPEONATO BRASILEIRO </Link>
                             </li>
-                            
-                            <li 
-                                className={path.includes('/copa-do-brasil') ?
-                                    'active' :
-                                    ''
-                                }
-                            >
-                                <Link to='/copa-do-brasil'> COPA DO BRASIL </Link>
-                            </li>
                         </ul>
                     </nav>
                 </ContentHeader>
